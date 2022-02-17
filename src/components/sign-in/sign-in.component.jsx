@@ -16,7 +16,7 @@ class SignIn extends React.Component{
     }
 
     handleSubmit = async event => {
-        event.preventDefault();
+        event.preventDefault();  //stopping default event behaviour
         const { email, password } = this.state;
         try {
             await auth.signInWithEmailAndPassword(email, password);
