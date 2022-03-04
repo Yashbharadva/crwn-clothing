@@ -14,7 +14,7 @@ const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 class ShopPage extends React.Component {
     constructor() {
         super();
-
+ 
         this.state = {
             loading: true
         }
