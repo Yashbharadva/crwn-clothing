@@ -24,8 +24,10 @@ export const selectIsCollectionFetching = createSelector(
     [selectShop],
     shop => shop.isFetching
 )
-
+//If there is no collection here then collectionloaded is false 
 export const selectIsCollectionLoaded = createSelector(
     [selectShop],
     shop => !!shop.collections
 )
+
+//So selectIsCollectionLoaded is false when there were no collection 
