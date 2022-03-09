@@ -6,7 +6,8 @@ import {persistStore} from 'redux-persist';
 //(2) We remove thunk cause we don't use anymore
 import rootReducer from './root-reducer';
 import createSagaMiddleware from '@redux-saga/core';
-import { fetchCollectionsStart } from './shop/shop.sagas';
+import rootsaga from './root-saga'; 
+//we remove fetchCollectionStart cause we import it in root-saga.js
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -19,6 +20,6 @@ export const store = createStore(rootReducer, applyMiddleware(...middlewares))
 //(3)use applyMiddleware in create store function
 //(4)pass thunk in applyMiddleware function
 
-sagaMiddleware.run(fetchCollectionsStart);
+sagaMiddleware.run(rootsaga);
 export const persistor = persistStore(store);
 export default { store, persistStore }; 
