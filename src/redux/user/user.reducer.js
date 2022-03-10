@@ -1,4 +1,4 @@
-import  UserActionTypes  from "./user.types";
+import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
     currentUser: null,
@@ -13,9 +13,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 currentUser: action.payload,
                 error: null
             };
-        
+        case UserActionTypes.SIGN_OUT_SUCCESS:
+            return {
+                ...state,
+                currentUser: null, // why null ?? then we have to apply this in header component
+                error: null
+            };
         case UserActionTypes.SIGN_IN_FAILURE:
-            return{
+        case UserActionTypes.SIGN_OUT_FAILURE:
+        case UserActionTypes.SIGN_UP_FAILURE:
+            return {
                 ...state,
                 error: action.payload
             };

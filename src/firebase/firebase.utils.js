@@ -31,7 +31,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
        ...additionalData 
       })
     } catch (error){
-      console.log('error creating user', error.message);
     }
   }
 
@@ -66,6 +65,17 @@ export const convertCollectionsSnapshotToMap = collections => {
     return accumulator; 
   }, {});
 };
+
+export const getCurrentUser = () => {
+   return new Promise((resolve, reject) => {
+     const unsubscribe = auth.onAuthStateChanged(userAuth => {
+       unsubscribe();
+       resolve(userAuth);
+     }, reject)
+   })
+}
+// for the new generator function ^|^
+
 
 firebase.initializeApp(config);
 export const auth = firebase.auth();
