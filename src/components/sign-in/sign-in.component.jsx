@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -6,47 +6,54 @@ import { googleSignInStart, emailSignInStart } from '../../redux/user/user.actio
 import '../custom-button/custom-button.styles.scss';
 import './sign-in.styles.scss';
 
-class SignIn extends React.Component{
-    constructor(props){
-        super(props);
+const SignIn = ({ emailSignInStart, googleSignInStart }) => {
+    //Destructure emailSignInStart
+    // constructor(props){
+    //     super(props);
 
-        this.state = {
-            email: '',
-            password:'' 
-        }
-    }
+    //     this.state = {
+    //         email: '',
+    //         password:'' 
+    //     }
+    // } 
+    // Because we gonna convert class based to functional based for hooks
+    const [userCredentials, setCredentials] = useState({ email:'', password:'' })
+    // In here we change the this.state to useState
 
-    handleSubmit = async event => {
+    const { email, password } = userCredentials;
+    const handleSubmit = async event => {
         event.preventDefault();  //stopping default event behaviour
-        const { emailSignInStart } = this.props;
-        const { email, password } = this.state;
+        
+        //Why userCredentials cause we can't use this.state so we use userCredentials
 
         emailSignInStart(email, password);
     };
 
 
-    handleChange = event => {
+    const handleChange = event => {
         const {value, name} = event.target
-        this.setState({[name]: value})
-    }
+        setCredentials({...userCredentials, [name]: value})
+        //We have to add other component also so we spred the userCredentials
+    };
 
  
-    render(){
-        const { googleSignInStart } = this.props;
+    // render(){
+    //     const { googleSignInStart } = this.props;
+    //We remove render cause it is class based 
         return(
             <div className='sign-in'>
                 <h2>I already have an account</h2>
                 
                 <span>Sign in with your email and password</span>
-                <form onSubmit={this.handleSubmit}>
-                    <FormInput name="email" type="email" value={this.state.email} 
+                <form onSubmit={handleSubmit}>
+                    <FormInput name="email" type="email" value={email} 
                     
-                    handleChange={this.handleChange}
+                    handleChange={handleChange}
                     label="Email"
                     required/>
                    
-                    <FormInput name="password" type="password" value={this.state.password} 
-                    handleChange={this.handleChange}
+                    <FormInput name="password" type="password" value={password} 
+                    handleChange={handleChange}
                     label="Password"
                     required/>
                     <div className='buttons'>
@@ -59,7 +66,7 @@ class SignIn extends React.Component{
             </div>
         );
     }
-}
+ 
 
 const mapDispatchToProps = dispatch => ({
     googleSignInStart: () => dispatch(googleSignInStart()),

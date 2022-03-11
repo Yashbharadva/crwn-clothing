@@ -3,8 +3,6 @@ import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/fireb
 import ShopActionTypes from './shop.types';
 import { fetchCollectionsSuccess, fetchCollectionsFailure } from './shop.actions';
 export function* fetchCollectionsAsync(){
-    yield console.log('I am Lewis Hamilton');
-
     try{
         const collectionRef = firestore.collection('collections');
         const snapshot = yield collectionRef.get();

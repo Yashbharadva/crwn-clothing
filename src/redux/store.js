@@ -22,4 +22,3 @@ export const store = createStore(rootReducer, applyMiddleware(...middlewares))
 
 sagaMiddleware.run(rootsaga);
 export const persistor = persistStore(store);
-export default { store, persistStore }; 

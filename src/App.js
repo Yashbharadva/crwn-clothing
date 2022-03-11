@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect } from 'react'; // Beacuse we have to changed componentDidMount and there...
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -16,27 +16,23 @@ import Header from './components/header/header.component';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
-class App extends React.Component {
-  constructor() {
-    super();
+const App = ({ checkUserSession, currentUser }) => {
+  // constructor() {
+  //   super();
 
-    this.state = {
-      currentUser: null
-    }; 
-  }
-
-  unsubscribeFromAuth = null
+  //   this.state = {
+  //     currentUser: null
+  //   }; 
+  // }
      
-  componentDidMount() {
-    const { checkUserSession } = this.props;
-    checkUserSession(); 
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
+  // componentDidMount() {
+    
+  //   checkUserSession();  
+  // }
+  //we don't need componentDidMount cause we use useEffect
+  useEffect(() => {
+    checkUserSession()
+  });
     return (
       <div>
         <Header />
@@ -45,7 +41,7 @@ class App extends React.Component {
           <Route path='/shop' component={ShopPage} />
           <Route exact path='/contact' component={ContactFeedback} />
           <Route exact path='/checkout' component={CheckoutPage} />
-          <Route path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />
+          <Route path='/signin' render={() => currentUser ? (<Redirect to='/' />
           ) : (
             <SignInAndSignUpPage />
           )} />
@@ -53,7 +49,7 @@ class App extends React.Component {
       </div>
     );
   }
-}
+
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
